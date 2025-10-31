@@ -13,12 +13,14 @@
   border-radius: 8px;
   overflow: hidden;
   background-color: #1a1a1a;
+  flex: 1;
 }
 
 .ra-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 /* Customize the photo album container */
@@ -26,14 +28,27 @@
   --rpa-gap: 16px;
 }
 
+/* Ensure vertical images take up appropriate space */
+.ra-image[style*="aspect-ratio"] {
+  min-width: 0;
+}
+
 @media (max-width: 1200px) {
   .react-photo-album {
     --rpa-gap: 12px;
+  }
+  
+  .ra-row {
+    gap: 12px;
   }
 }
 
 @media (max-width: 768px) {
   .react-photo-album {
     --rpa-gap: 8px;
+  }
+  
+  .ra-row {
+    gap: 8px;
   }
 }

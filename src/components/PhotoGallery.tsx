@@ -6,7 +6,17 @@ import 'react-photo-album/rows.css';
 import '@/styles/photoGallery.css';
 import { useRef, useEffect, useState } from 'react';
 
-import photos from '@/components/photos';
+import { allPhotos } from '@/components/photos';
+
+// Shuffle function
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
 
 function ImageWrapper({ photo, width, height, alt, title, sizes }: any) {
   const imgRef = useRef<HTMLDivElement>(null);
@@ -73,14 +83,31 @@ function renderNextImage({ alt = '', title, sizes }: RenderImageProps, { photo, 
 }
 
 export default function PhotoGallery() {
+  const [photos, setPhotos] = useState(allPhotos);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Shuffle photos on client side only
+    setPhotos(shuffleArray(allPhotos));
+
+    // Check if mobile
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div className="photo-gallery-container">
       <RowsPhotoAlbum
         photos={photos}
         render={{ image: renderNextImage }}
-        defaultContainerWidth={1200}
+        defaultContainerWidth={isMobile ? 600 : 1200}
         sizes={{
-          size: '1168px',
+          size: isMobile ? '100vw' : '1168px',
           sizes: [{ viewport: '(max-width: 1200px)', size: 'calc(100vw - 32px)' }],
         }}
       />

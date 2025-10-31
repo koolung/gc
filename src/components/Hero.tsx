@@ -21,11 +21,11 @@ export default function Hero() {
       if (!sectionRef.current) return;
 
       const sectionTop = sectionRef.current.getBoundingClientRect().top;
-      const sectionHeight = sectionRef.current.offsetHeight;
       const windowHeight = window.innerHeight;
 
-      // Calculate scroll progress relative to the section
-      const scrollProgress = Math.max(0, Math.min(1, -sectionTop / (sectionHeight - windowHeight)));
+      // Calculate scroll progress based on when section enters and leaves viewport
+      // This makes animations trigger based on viewport position, not total section height
+      const scrollProgress = Math.max(0, -sectionTop / windowHeight);
 
       // Main image grows from 40% to 50% width as user scrolls
       // 40% = scale 1, 50% = scale 1.25
@@ -47,9 +47,9 @@ export default function Hero() {
       // Phase 1 (0.80-0.85): Slide horizontally to center, no scaling
       // Phase 2 (0.85-0.95): Scale up from 1x to 10x while stationary  
       // Phase 3 (0.95-1.0): Fade out
-      const logoTrigger = 0.4;
+      const logoTrigger = 0.9;
       if (scrollProgress >= logoTrigger) {
-        const logoProgress = (scrollProgress - logoTrigger) / (1 - logoTrigger);
+        const logoProgress = Math.min(1, (scrollProgress - logoTrigger) * 5);
         
         // Phase 1: Sliding (0 to 0.333 of animation) - no scaling
         // Phase 2: Scaling (0.333 to 0.833 of animation)
@@ -93,12 +93,12 @@ export default function Hero() {
       }
 
       // Image div scrolls up and disappears at bottom of word div
-      // Starts at 40% progress, fully disappears by 65%
-      const imageFadeStart = 0.40;
-      const imageFadeEnd = 0.65;
+      // Starts at 60% progress, fully disappears by 85%
+      const imageFadeStart = 0.80;
+      const imageFadeEnd = 1;
       if (scrollProgress >= imageFadeStart) {
         const fadeProgress = Math.min(1, (scrollProgress - imageFadeStart) / (imageFadeEnd - imageFadeStart));
-        setImageOffset(-fadeProgress * 400); // Scroll up 400px (200px faster)
+        setImageOffset(-fadeProgress * 150); // Scroll up 300px
         setImageOpacity(1 - fadeProgress); // Fade out
         setGalleryOpacity(1 - fadeProgress); // Gallery fades out at same time
       } else {
@@ -244,7 +244,7 @@ export default function Hero() {
       </div>
 
       {/* Gallery portfolio Section */}
-      <div className="relative z-30 w-full px-5 py-20" style={{ transform: 'translateY(140vh)' }}>
+      <div className="relative z-30 w-full px-5 py-20" style={{ transform: 'translateY(90vh)' }}>
         <PhotoGallery />
       </div>
     </section>
