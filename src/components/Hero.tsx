@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
+import PhotoGallery from './PhotoGallery';
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -33,12 +34,12 @@ export default function Hero() {
 
       // Gallery images grow sequentially
       // Each image has a stagger offset (0.33 = 1/3 of the scroll range)
-      // Grow from 30% to 40% (scale 1 to 1.333)
+      // Grow from 35% to 45% (scale 1 to 1.286)
       const stagger = 0.33;
       const newScales = [
-        Math.min(1 + Math.max(0, scrollProgress - 0) * 0.333 / stagger, 1.333),
-        Math.min(1 + Math.max(0, scrollProgress - stagger * 0.8) * 0.333 / stagger, 1.333),
-        Math.min(1 + Math.max(0, scrollProgress - stagger * 1.2) * 0.333 / stagger, 1.333),
+        Math.min(1 + Math.max(0, scrollProgress - 0) * 0.286 / stagger, 1.286),
+        Math.min(1 + Math.max(0, scrollProgress - stagger * 0.4) * 0.286 / stagger, 1.286),
+        Math.min(1 + Math.max(0, scrollProgress - stagger * 0.7) * 0.286 / stagger, 1.286),
       ];
       setImageScales(newScales);
 
@@ -46,7 +47,7 @@ export default function Hero() {
       // Phase 1 (0.80-0.85): Slide horizontally to center, no scaling
       // Phase 2 (0.85-0.95): Scale up from 1x to 10x while stationary  
       // Phase 3 (0.95-1.0): Fade out
-      const logoTrigger = 0.6;
+      const logoTrigger = 0.4;
       if (scrollProgress >= logoTrigger) {
         const logoProgress = (scrollProgress - logoTrigger) / (1 - logoTrigger);
         
@@ -92,12 +93,12 @@ export default function Hero() {
       }
 
       // Image div scrolls up and disappears at bottom of word div
-      // Starts at 60% progress, fully disappears by 80%
-      const imageFadeStart = 0.60;
-      const imageFadeEnd = 0.80;
+      // Starts at 40% progress, fully disappears by 65%
+      const imageFadeStart = 0.40;
+      const imageFadeEnd = 0.65;
       if (scrollProgress >= imageFadeStart) {
         const fadeProgress = Math.min(1, (scrollProgress - imageFadeStart) / (imageFadeEnd - imageFadeStart));
-        setImageOffset(-fadeProgress * 200); // Scroll up 200px
+        setImageOffset(-fadeProgress * 400); // Scroll up 400px (200px faster)
         setImageOpacity(1 - fadeProgress); // Fade out
         setGalleryOpacity(1 - fadeProgress); // Gallery fades out at same time
       } else {
@@ -146,7 +147,7 @@ export default function Hero() {
         {/* Image 1 */}
         <div 
           className="h-[auto] bg-[#1a1a1a] overflow-hidden flex items-center justify-center"
-          style={{ width: `${Math.min(30 * imageScales[0], 40)}%` }}
+          style={{ width: `${Math.min(35 * imageScales[0], 45)}%` }}
         >
           <img 
             src="/images/hero1.jpeg" 
@@ -158,7 +159,7 @@ export default function Hero() {
         {/* Image 2 */}
         <div 
           className="h-[auto] bg-[#1a1a1a] overflow-hidden flex items-center justify-center"
-          style={{ width: `${Math.min(30 * imageScales[1], 40)}%` }}
+          style={{ width: `${Math.min(35 * imageScales[1], 45)}%` }}
         >
           <img 
             src="/images/hero2.jpeg" 
@@ -170,7 +171,7 @@ export default function Hero() {
         {/* Image 3 */}
         <div 
           className="h-[auto] bg-[#1a1a1a] overflow-hidden flex items-center justify-center"
-          style={{ width: `${Math.min(30 * imageScales[2], 40)}%` }}
+          style={{ width: `${Math.min(35 * imageScales[2], 45)}%` }}
         >
           <img 
             src="/images/hero3.jpeg" 
@@ -182,7 +183,7 @@ export default function Hero() {
 
       {/* Image Div - Fixed, same top as word div, grows as you scroll */}
       <div
-        className="fixed right-2 z-20"
+        className="fixed right-4 z-20"
         style={{
           width: `${Math.min(40 * imageScale, 50)}%`,
           top: `calc(8rem + ${imageOffset}px)`,
@@ -242,64 +243,9 @@ export default function Hero() {
         />
       </div>
 
-      {/* Gallery Section */}
+      {/* Gallery portfolio Section */}
       <div className="relative z-30 w-full px-5 py-20" style={{ transform: 'translateY(140vh)' }}>
-        {/* Row 1: 2 images */}
-        <div className="flex gap-10 mb-10 w-[85%]">
-          <div 
-            className="flex-1 h-64 bg-[#1a1a1a] overflow-hidden rounded-lg"
-          >
-            <img 
-              src="/images/gallery1.jpeg" 
-              alt="Gallery 1" 
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div 
-            className="flex-1 h-64 bg-[#1a1a1a] overflow-hidden rounded-lg"
-          >
-            <img 
-              src="/images/gallery2.jpeg" 
-              alt="Gallery 2" 
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-
-        {/* Row 2: 1 image centered */}
-        <div className="flex justify-center mb-10 w-[85%]">
-          <div 
-            className="w-1/2 h-64 bg-[#1a1a1a] overflow-hidden rounded-lg"
-          >
-            <img 
-              src="/images/gallery3.jpeg" 
-              alt="Gallery 3" 
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-
-        {/* Row 3: 2 images reversed */}
-        <div className="flex gap-10 w-[85%]">
-          <div 
-            className="flex-1 h-64 bg-[#1a1a1a] overflow-hidden rounded-lg"
-          >
-            <img 
-              src="/images/gallery2.jpeg" 
-              alt="Gallery 2" 
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div 
-            className="flex-1 h-64 bg-[#1a1a1a] overflow-hidden rounded-lg"
-          >
-            <img 
-              src="/images/gallery1.jpeg" 
-              alt="Gallery 1" 
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
+        <PhotoGallery />
       </div>
     </section>
   );

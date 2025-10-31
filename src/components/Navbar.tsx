@@ -54,7 +54,7 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Navbar */}
-      <div className="md:hidden flex items-center justify-between px-2 py-2 relative z-50">
+      <div className="md:hidden flex items-center justify-between px-2 py-3 relative z-50">
         {/* Mobile Logo */}
         <Image
           src="/images/logo.png"
@@ -68,7 +68,7 @@ export default function Navbar() {
         {/* Hamburger Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-10 h-10 bg-black flex items-center justify-center relative flex-shrink-0"
+          className="w-10 h-10 bg-black flex items-center justify-center relative flex-shrink-0 mr-2"
           aria-label="Toggle menu"
         >
           <div className="relative w-6 h-5 flex items-center justify-center">
