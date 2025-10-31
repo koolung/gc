@@ -47,9 +47,9 @@ export default function Hero() {
       // Phase 1 (0.80-0.85): Slide horizontally to center, no scaling
       // Phase 2 (0.85-0.95): Scale up from 1x to 10x while stationary  
       // Phase 3 (0.95-1.0): Fade out
-      const logoTrigger = 0.9;
+      const logoTrigger = 1;
       if (scrollProgress >= logoTrigger) {
-        const logoProgress = Math.min(1, (scrollProgress - logoTrigger) * 5);
+        const logoProgress = Math.min(1, (scrollProgress - logoTrigger) * 2);
         
         // Phase 1: Sliding (0 to 0.333 of animation) - no scaling
         // Phase 2: Scaling (0.333 to 0.833 of animation)
