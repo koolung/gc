@@ -128,7 +128,7 @@ export default function Hero() {
       className="relative w-full min-h-[300vh] bg-[#2a2a2a]"
     >
       {/* Container with word div - overlaps on top */}
-      <div className="w-full h-[75vh] flex items-start pt-14 relative z-30">
+      <div className="w-full h-[75vh] flex items-start pt-12 relative z-30">
         {/* Word Div - 80% width, left aligned, overlaps on top of image */}
         <div className="w-[85%] px-5">
           <div className="text-4xl text-[#c2c2c2] leading-tight uppercase">
@@ -244,7 +244,7 @@ export default function Hero() {
       </div>
 
       {/* Gallery portfolio Section */}
-      <div className="relative z-30 w-full px-5 py-20" style={{ transform: 'translateY(90vh)' }}>
+      <div className="relative z-30 w-full px-5 py-20" style={{ transform: 'translateY(100vh)' }}>
         <PhotoGallery />
       </div>
     </section>
